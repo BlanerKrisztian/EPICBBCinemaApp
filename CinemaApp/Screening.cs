@@ -4,7 +4,7 @@ namespace CinemaApp
     {
         private readonly string _title;
         private readonly int _totalSeats;
-        private readonly List<string> _bookedNames;
+        private List<string> _bookedNames = new();
 
         // title nem lehet null vagy üres, totalSeats >= 1
         public Screening(string title, int totalSeats)
@@ -13,6 +13,8 @@ namespace CinemaApp
             {
                 throw new ArgumentException();
             }
+            _title = title.Trim();
+            _totalSeats = totalSeats;
         }
 
         public string GetTitle()
@@ -31,7 +33,8 @@ namespace CinemaApp
             else
             {
 
-                _bookedNames.Prepend(name);
+                _bookedNames.Add(name);
+                Console.WriteLine();
                 return true;
             }
         }
