@@ -6,7 +6,7 @@ namespace CinemaApp.Tests
     [TestClass]
     public class ScreeningTests
     {
-        private Screening CreateDefaultScreening() => new Screening("Inception", 5);
+        private static Screening CreateDefaultScreening() => new Screening("Inception", 5);
 
         // ---- Constructor ----
 
@@ -88,10 +88,17 @@ namespace CinemaApp.Tests
                 Assert.AreEqual(4, screening.GetAvailableSeats());
 
                 Assert.IsTrue(screening.BookSeat("RealPerson2"));
+                Assert.AreEqual(3, screening.GetAvailableSeats());
                 Assert.IsTrue(screening.BookSeat("RealPerson3"));
+                Assert.AreEqual(2, screening.GetAvailableSeats());
                 Assert.IsTrue(screening.BookSeat("RealPerson4"));
+                Assert.AreEqual(1, screening.GetAvailableSeats());
+                Assert.IsTrue(screening.BookSeat("RealPerson4.5"));
+                Assert.AreEqual(0, screening.GetAvailableSeats());
                 Assert.IsFalse(screening.BookSeat("RealPerson5"));
                 Assert.IsFalse(screening.BookSeat("RealPerson6"));
+
+                Assert.AreEqual(0, screening.GetAvailableSeats());
 
 
 
@@ -115,8 +122,9 @@ namespace CinemaApp.Tests
             Assert.AreEqual(5, screening.GetAvailableSeats());
 
             screening.BookSeat("RealPerson1");
-            bool result2 = screening.CancelBooking("RealPerson1");
             Assert.AreEqual(4, screening.GetAvailableSeats());
+            bool result2 = screening.CancelBooking("RealPerson1");
+            Assert.AreEqual(5, screening.GetAvailableSeats());
             Assert.IsTrue(result2);
             Assert.AreEqual(5, screening.GetAvailableSeats());
         }
@@ -212,8 +220,6 @@ namespace CinemaApp.Tests
             Assert.IsFalse(screening.IsHouseFull());
             screening.BookSeat("Bob");
             Assert.IsTrue(screening.IsHouseFull());
-            screening.BookSeat("RandomCat");
-            Assert.IsFalse(screening.IsHouseFull());
         }
         // TODO: szabad hellyel rendelkező vetítésnél false-t kell visszaadni
         // TODO: lemondás után a vetítés már nem teli, IsHouseFull() false-t ad vissza
