@@ -9,45 +9,72 @@ namespace CinemaApp
         // title nem lehet null vagy üres, totalSeats >= 1
         public Screening(string title, int totalSeats)
         {
-            throw new NotImplementedException();
+            if (title is null || title.Trim() == "" || title == "" || totalSeats <= 0)
+            {
+                throw new ArgumentException();
+            }
         }
 
         public string GetTitle()
         {
-            throw new NotImplementedException();
+            return _title;
         }
 
         // Visszatér false ha nincs szabad hely, vagy a személy már foglalt
         public bool BookSeat(string name)
         {
-            throw new NotImplementedException();
+            
+            if (_bookedNames.Contains(name) || IsHouseFull())
+            {
+                return false;
+            }
+            else
+            {
+
+                _bookedNames.Prepend(name);
+                return true;
+            }
         }
 
         // Visszatér false ha a személy neve nem szerepel a _bookedNames listában
         public bool CancelBooking(string name)
         {
-            throw new NotImplementedException();
+            if (_bookedNames.Contains(name))
+            {
+                _bookedNames.Remove(name);
+                return true;
+            }
+            return false;
         }
 
         public bool IsBooked(string name)
         {
-            throw new NotImplementedException();
+            if (_bookedNames.Contains(name))
+            {
+                return true;
+            }
+            return false;
         }
 
         // Szabad helyek = _totalSeats - _bookedNames.Count
         public int GetAvailableSeats()
         {
-            throw new NotImplementedException();
+            int returnInt = _totalSeats - _bookedNames.Count;
+            return returnInt;
         }
 
         public int GetBookedCount()
         {
-            throw new NotImplementedException();
+            return _bookedNames.Count;
         }
 
         public bool IsHouseFull()
         {
-            throw new NotImplementedException();
+            if (_bookedNames.Count == _totalSeats)
+            {
+                return true;
+            }
+            return false;
         }
 
         // -------------------------------------------------------
